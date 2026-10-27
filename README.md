@@ -85,3 +85,9 @@ The collector uses Python 3's standard library. To test the code on your own com
 python3 collect_access.py --no-download --output output
 python3 scripts/publish_results.py --input output --output results/latest
 ```
+
+### October 27 collection audit patch
+
+The collector now records `source_test`, `source_subject_or_domain`, source school/district IDs (when present), and any included-population designation. The additional `source_column_inventory.csv` lists state workbook header names so coded or stacked Illinois report-card columns can be mapped without guessing. School matching refuses to merge separately named elementary and middle schools.
+
+**Warning:** These are still candidate values, not verified exit rates. Illinois data are not considered extracted unless ACCESS/English-learner outcome fields are explicitly identified. Minnesota's published `Percent Proficient` is an ACCESS proficiency measure when on a **Composite** row, but test/domain metadata must be retained and reviewed.

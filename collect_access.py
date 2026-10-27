@@ -75,6 +75,11 @@ DISTRICT_FIELD = re.compile(r"^(district|district name|districtname|district/cha
 GRADE_FIELD = re.compile(r"^(grade|grade level|gradelevel|tested grade|assessment grade)$", re.I)
 GROUP_FIELD = re.compile(r"^(group|subgroup|student group|report description|report category|population|demographic group)$", re.I)
 YEAR_FIELD = re.compile(r"^(year|school year|assessment year|fiscal year|testing year|test year)$", re.I)
+TEST_FIELD = re.compile(r"^(test name|assessment name|test|assessment)$", re.I)
+SUBJECT_FIELD = re.compile(r"^(subject|test subject|test domain|domain)$", re.I)
+SCHOOL_ID_FIELD = re.compile(r"^(school number|school id|school code|school identifier|rcdts|rcdts code)$", re.I)
+DISTRICT_ID_FIELD = re.compile(r"^(district number|district id|district code|district identifier|lea id)$", re.I)
+INCLUDED_FIELD = re.compile(r"^(students included|included students|tested count type|number tested type)$", re.I)
 
 
 def normalize(s: object) -> str:
@@ -108,13 +113,31 @@ def load_inventory(path: Path) -> dict[str, list[dict[str, str]]]:
     return by_state
 
 
+def incompatible_school_levels(source: str, target: str) -> bool:
+    """Never match an elementary school to a separate middle/high school.
+
+    Other name variation still goes through the existing conservative review rule.
+    """
+    def level(name: str) -> str | None:
+        x = strict_norm(name)
+        if re.search(r"\b(middle|junior high)\b", x):
+            return "middle"
+        if re.search(r"\b(elementary|elem|primary)\b", x):
+            return "elementary"
+        if re.search(r"\b(high school|senior high)\b", x):
+            return "high"
+        return None
+    a, b = level(source), level(target)
+    return bool(a and b and a != b)
+
+
 def match_school(school: str, district: str, candidates: list[dict[str, str]]):
     exact = strict_norm(school)
     loose = normalize(school)
     scored = []
     for item in candidates:
         target = item['School']
-        if not exact or not strict_norm(target):
+        if not exact or not strict_norm(target) or incompatible_school_levels(school, target):
             continue
         if exact == strict_norm(target):
             score = 1.0
@@ -291,7 +314,7 @@ def choose_header(first: list[dict[int, str]]):
 
 def extract_file(path: Path, state: str, inventory: list[dict[str, str]], output: Path, source_uri: str = ""):
     manifest = {"state":state,"file":str(path),"sheets":[],"high_confidence":0,"review_rows":0,"access_fields":0,"warnings":[]}
-    matches, fields, audit = [], [], []
+    matches, fields, audit, headers_audit = [], [], [], []
     is_access_file = 'access' in path.name.lower() or 'wida' in path.name.lower()
     try:
         for sheet, rows in iter_tables(path):
@@ -307,6 +330,12 @@ def extract_file(path: Path, state: str, inventory: list[dict[str, str]], output
             header_index, heads = found
             ordered = [(idx, txt) for idx,txt in heads.items()]
             names = [name for _,name in ordered]
+            # All public header text is useful for diagnosing state files with
+            # coded/stacked headings (especially Illinois). No student rows.
+            headers_audit.extend({"state":state, "file":path.name, "sheet":sheet,
+                                  "column_index":idx + 1, "header_AS_PUBLISHED":name,
+                                  "looks_ACCESS_related":bool(re.search(r"access|wida|\belp\b|english|learner|language.?proficien|reclass|exit",name,re.I))}
+                                 for idx,name in ordered)
             if any(SENSITIVE_HEADER.search(h) for h in names):
                 manifest['sheets'].append({"name":sheet,"status":"skipped: student-level identifiers appear present"})
                 continue
@@ -321,6 +350,15 @@ def extract_file(path: Path, state: str, inventory: list[dict[str, str]], output
             gidx = name_to_idx[gfield] if gfield else None
             groupidx = name_to_idx[groupfield] if groupfield else None
             yearidx = name_to_idx[yearfield] if yearfield else None
+            def optional_header_value(vals, pat):
+                name = best_field(names, pat)
+                return vals.get(name_to_idx[name], '') if name else ''
+            def row_context(vals):
+                return {"source_test":optional_header_value(vals,TEST_FIELD),
+                        "source_subject_or_domain":optional_header_value(vals,SUBJECT_FIELD),
+                        "source_school_id":optional_header_value(vals,SCHOOL_ID_FIELD),
+                        "source_district_id":optional_header_value(vals,DISTRICT_ID_FIELD),
+                        "source_students_included":optional_header_value(vals,INCLUDED_FIELD)}
             metric_cols = [(i,n) for i,n in ordered if METRIC_HEADING.search(n) or
                            (is_access_file and ACCESS_FILE_METRIC.search(n))]
             for i,n in metric_cols:
@@ -341,7 +379,7 @@ def extract_file(path: Path, state: str, inventory: list[dict[str, str]], output
                         for idx, metric in metric_cols:
                             val = vals.get(idx,'')
                             if str(val).strip():
-                                matches.append({"state":state,"school":item['School'],"inventory_id":item.get('Row_ID',''),"reported_school":school,"reported_district":vals.get(didx,'') if didx is not None else '',"grade":vals.get(gidx,'') if gidx is not None else '',"subgroup":vals.get(groupidx,'') if groupidx is not None else '',"reported_year":vals.get(yearidx,'') if yearidx is not None else '',"field_name_AS_PUBLISHED":metric,"value_AS_PUBLISHED":val,"source_sheet":sheet,"source_file":path.name,"source_url":source_uri,"match_status":status,"match_score":score,"metric_status":"unvalidated_candidate_not_standardized"})
+                                matches.append({"state":state,"school":item['School'],"inventory_id":item.get('Row_ID',''),"reported_school":school,"reported_district":vals.get(didx,'') if didx is not None else '',"grade":vals.get(gidx,'') if gidx is not None else '',"subgroup":vals.get(groupidx,'') if groupidx is not None else '',"reported_year":vals.get(yearidx,'') if yearidx is not None else '',"field_name_AS_PUBLISHED":metric,"value_AS_PUBLISHED":val,"source_sheet":sheet,"source_file":path.name,"source_url":source_uri,"match_status":status,"match_score":score,"metric_status":"unvalidated_candidate_not_standardized", **row_context(vals)})
             for vals in rows:
                 processed += 1
                 school = vals.get(sidx, '')
@@ -355,12 +393,12 @@ def extract_file(path: Path, state: str, inventory: list[dict[str, str]], output
                 for idx, metric in metric_cols:
                     val = vals.get(idx,'')
                     if not str(val).strip(): continue
-                    matches.append({"state":state,"school":item['School'],"inventory_id":item.get('Row_ID',''),"reported_school":school,"reported_district":vals.get(didx,'') if didx is not None else '',"grade":vals.get(gidx,'') if gidx is not None else '',"subgroup":vals.get(groupidx,'') if groupidx is not None else '',"reported_year":vals.get(yearidx,'') if yearidx is not None else '',"field_name_AS_PUBLISHED":metric,"value_AS_PUBLISHED":val,"source_sheet":sheet,"source_file":path.name,"source_url":source_uri,"match_status":status,"match_score":score,"metric_status":"unvalidated_candidate_not_standardized"})
+                    matches.append({"state":state,"school":item['School'],"inventory_id":item.get('Row_ID',''),"reported_school":school,"reported_district":vals.get(didx,'') if didx is not None else '',"grade":vals.get(gidx,'') if gidx is not None else '',"subgroup":vals.get(groupidx,'') if groupidx is not None else '',"reported_year":vals.get(yearidx,'') if yearidx is not None else '',"field_name_AS_PUBLISHED":metric,"value_AS_PUBLISHED":val,"source_sheet":sheet,"source_file":path.name,"source_url":source_uri,"match_status":status,"match_score":score,"metric_status":"unvalidated_candidate_not_standardized", **row_context(vals)})
             manifest['access_fields'] += field_count
             manifest['sheets'].append({"name":sheet,"status":"processed","school_rows_checked":processed,"potential_school_rows_matched":candidates_count,"candidate_metric_fields":field_count})
     except (ValueError, OSError, ET.ParseError, zipfile.BadZipFile, EOFError, KeyError) as e:
         manifest['warnings'].append(f"Processing error: {e}")
-    return matches, fields, audit, manifest
+    return matches, fields, audit, headers_audit, manifest
 
 
 def write_csv(path: Path, rows: list[dict], cols: list[str]):
@@ -421,22 +459,25 @@ def main():
             p=raw/s
             if p.exists(): paths[s] += [f for f in p.iterdir() if f.suffix.lower() in ('.csv','.tsv','.txt','.xlsx','.zip')]
         paths[s] = list(dict.fromkeys(paths[s]))
-    all_matches, all_fields, all_audit, runs=[],[],[],[]
+    all_matches, all_fields, all_audit, all_headers, runs=[],[],[],[],[]
     for state in states:
         for f in paths.get(state,[]):
             print(f'Processing {state}: {f.name}', flush=True)
             direct = cfg.get(state, {}).get('url') or ''
             auto_name = cfg.get(state, {}).get('filename') or ''
             provenance = direct if f.parent.resolve() == (raw/state).resolve() and f.name == auto_name else ''
-            ms, fs, au, run=extract_file(f, state, by_state.get(state,[]), out, provenance)
-            all_matches+=ms; all_fields+=fs; all_audit+=au; runs.append(run)
+            ms, fs, au, ha, run=extract_file(f, state, by_state.get(state,[]), out, provenance)
+            all_matches+=ms; all_fields+=fs; all_audit+=au; all_headers+=ha; runs.append(run)
     write_csv(out/'access_metric_candidates.csv', all_matches, [
         'state','school','inventory_id','reported_school','reported_district','grade','subgroup','reported_year','field_name_AS_PUBLISHED',
-        'value_AS_PUBLISHED','source_sheet','source_file','source_url','match_status','match_score','metric_status'])
+        'value_AS_PUBLISHED','source_sheet','source_file','source_url','match_status','match_score','metric_status',
+        'source_test','source_subject_or_domain','source_school_id','source_district_id','source_students_included'])
     write_csv(out/'match_audit.csv', all_audit, [
         'state','source_file','sheet','reported_school','reported_district','inventory_id','inventory_school','model','match_score','match_status'])
     write_csv(out/'field_inventory.csv', all_fields, [
         'state','file','sheet','source_field','source_column_index','classification'])
+    write_csv(out/'source_column_inventory.csv', all_headers, [
+        'state','file','sheet','column_index','header_AS_PUBLISHED','looks_ACCESS_related'])
     school_count = {}
     for r in all_matches:
         key = (r['state'], r['inventory_id'], r['school'])
@@ -456,6 +497,8 @@ def main():
              'downloads':events,'parsed_files':runs,
              'total_inventory_schools':sum(len(v) for v in by_state.values()),
              'matched_candidate_records':len(all_audit),
+             'distinct_inventory_entries_with_matches':len(set((a['state'],a['inventory_id']) for a in all_audit)),
+             'distinct_inventory_entries_with_metric_values':len(set((a['state'],a['inventory_id']) for a in all_matches)),
              'candidate_metric_values':len(all_matches),
              'note':'All extracted values are candidate raw fields; verify metric/denominator/year/grade before adding to analysis.'}
     (out/'collection_report.json').write_text(json.dumps(summary,indent=2,ensure_ascii=False),encoding='utf-8')

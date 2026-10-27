@@ -19,6 +19,7 @@ PUBLIC_FILES = [
     'access_metric_candidates.csv',
     'match_audit.csv',
     'field_inventory.csv',
+    'source_column_inventory.csv',
     'school_inventory_with_collection_status.csv',
     'collection_report.json',
 ]
