@@ -1,0 +1,66 @@
+
+name: Collect public ACCESS data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 14 1 * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: midwest-access-collector
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - name: Check out this repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Collect public aggregate data
+        id: collect
+        run: python3 collect_access.py --states IL,MN,WI,MI,IN,MO,SD,ND --output output
+
+      - name: Prepare results snapshot
+        if: always()
+        run: python3 scripts/publish_results.py --input output --output results/latest
+
+      - name: Save updated CSVs
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/latest
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update public ACCESS collection report'
+            git push
+          else
+            echo 'No changes to published data.'
+          fi
+
+      - name: Upload downloadable results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: midwest-access-results-${{ github.run_number }}
+          path: |
+            output/*.csv
+            output/*.json
+            results/latest/README.md
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Check collection results
+        if: always()
+        run: python3 scripts/publish_results.py --input output --check
