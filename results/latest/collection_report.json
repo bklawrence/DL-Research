@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-10-27T22:51:42.535399+00:00",
+  "created_utc": "2026-10-27T23:18:37.042534+00:00",
   "purpose": "school-level aggregate ACCESS retrieval; no inferred comparability or exit rates",
   "downloads": [
     {
@@ -208,7 +208,7 @@
           "name": "School",
           "status": "processed",
           "school_rows_checked": 645311,
-          "potential_school_rows_matched": 1340,
+          "potential_school_rows_matched": 1075,
           "candidate_metric_fields": 30
         },
         {
@@ -219,14 +219,16 @@
           "candidate_metric_fields": 0
         }
       ],
-      "high_confidence": 1340,
+      "high_confidence": 1075,
       "review_rows": 0,
       "access_fields": 120,
       "warnings": []
     }
   ],
   "total_inventory_schools": 56,
-  "matched_candidate_records": 1490,
-  "candidate_metric_values": 23658,
+  "matched_candidate_records": 1225,
+  "distinct_inventory_entries_with_matches": 12,
+  "distinct_inventory_entries_with_metric_values": 2,
+  "candidate_metric_values": 19908,
   "note": "All extracted values are candidate raw fields; verify metric/denominator/year/grade before adding to analysis."
 }

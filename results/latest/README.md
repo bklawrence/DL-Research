@@ -1,10 +1,10 @@
 # Midwest ACCESS collector — latest run
 
-Last attempt (UTC): 2026-10-27T22:51:42.535399+00:00
+Last attempt (UTC): 2026-10-27T23:18:37.042534+00:00
 
 Parsed 2 source file(s); all extracted measures remain **unvalidated candidates**.
 
-Inventory entries: **56**; source school-row matches: **1490**; candidate metric cells: **23658**.
+Inventory entries: **56**; source school-row matches: **1225**; candidate metric cells: **19908**.
 
 **These counts are not validated ACCESS exit rates or an analytical sample size.**
 
