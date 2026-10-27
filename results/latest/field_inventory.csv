@@ -1,0 +1,121 @@
+﻿state,file,sheet,source_field,source_column_index,classification
+MN,MN_2025_ACCESS_public.xlsx,State,County Number,2,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,County Name,3,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Total Tested,17,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Percent Proficient,19,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Count Level 1,20,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Count Level 2,21,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Count Level 3,22,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Count Level 4,23,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Count Level 5,24,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Count Level 6,25,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Percent Level 1,26,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Percent Level 2,27,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Percent Level 3,28,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Percent Level 4,29,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Percent Level 5,30,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Percent Level 6,31,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Average Scale Score,32,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,LTSS Average Scale Score,34,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,ORSS Average Scale Score,35,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,CMSS Average Scale Score,36,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Count Absent,41,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Count Invalid,42,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Count Medical Exempt,43,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Count Not Attempted,44,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Count Not Complete,45,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Count Not Enrolled,46,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Count Refused,47,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Count Special Education Exempt,48,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Count Wrong Grade,49,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,State,Count Extenuating Circumstances Not Attempted,50,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,County Number,2,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,County Name,3,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Total Tested,17,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Percent Proficient,19,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Count Level 1,20,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Count Level 2,21,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Count Level 3,22,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Count Level 4,23,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Count Level 5,24,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Count Level 6,25,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Percent Level 1,26,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Percent Level 2,27,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Percent Level 3,28,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Percent Level 4,29,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Percent Level 5,30,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Percent Level 6,31,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Average Scale Score,32,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,LTSS Average Scale Score,34,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,ORSS Average Scale Score,35,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,CMSS Average Scale Score,36,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Count Absent,41,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Count Invalid,42,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Count Medical Exempt,43,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Count Not Attempted,44,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Count Not Complete,45,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Count Not Enrolled,46,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Count Refused,47,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Count Special Education Exempt,48,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Count Wrong Grade,49,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,County,Count Extenuating Circumstances Not Attempted,50,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,County Number,2,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,County Name,3,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Total Tested,17,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Percent Proficient,19,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Count Level 1,20,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Count Level 2,21,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Count Level 3,22,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Count Level 4,23,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Count Level 5,24,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Count Level 6,25,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Percent Level 1,26,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Percent Level 2,27,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Percent Level 3,28,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Percent Level 4,29,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Percent Level 5,30,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Percent Level 6,31,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Average Scale Score,32,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,LTSS Average Scale Score,34,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,ORSS Average Scale Score,35,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,CMSS Average Scale Score,36,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Count Absent,41,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Count Invalid,42,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Count Medical Exempt,43,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Count Not Attempted,44,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Count Not Complete,45,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Count Not Enrolled,46,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Count Refused,47,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Count Special Education Exempt,48,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Count Wrong Grade,49,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,District,Count Extenuating Circumstances Not Attempted,50,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,County Number,2,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,County Name,3,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Total Tested,17,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Percent Proficient,19,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Count Level 1,20,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Count Level 2,21,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Count Level 3,22,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Count Level 4,23,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Count Level 5,24,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Count Level 6,25,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Percent Level 1,26,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Percent Level 2,27,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Percent Level 3,28,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Percent Level 4,29,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Percent Level 5,30,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Percent Level 6,31,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Average Scale Score,32,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,LTSS Average Scale Score,34,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,ORSS Average Scale Score,35,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,CMSS Average Scale Score,36,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Count Absent,41,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Count Invalid,42,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Count Medical Exempt,43,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Count Not Attempted,44,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Count Not Complete,45,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Count Not Enrolled,46,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Count Refused,47,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Count Special Education Exempt,48,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Count Wrong Grade,49,candidate_NOT_validated
+MN,MN_2025_ACCESS_public.xlsx,School,Count Extenuating Circumstances Not Attempted,50,candidate_NOT_validated

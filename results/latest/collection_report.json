@@ -1,0 +1,232 @@
+{
+  "created_utc": "2026-10-27T22:51:42.535399+00:00",
+  "purpose": "school-level aggregate ACCESS retrieval; no inferred comparability or exit rates",
+  "downloads": [
+    {
+      "state": "IL",
+      "source": "https://www.isbe.net/_layouts/Download.aspx?SourceUrl=%2FDocuments%2F2025-Report-Card-Public-Data-Set.xlsx",
+      "status": "downloaded",
+      "path": "/home/runner/work/DL-Research/DL-Research/output/raw/IL/IL_2025_report_card_public.xlsx",
+      "bytes": "40314938",
+      "url": "https://www.isbe.net/_layouts/Download.aspx?SourceUrl=%2FDocuments%2F2025-Report-Card-Public-Data-Set.xlsx"
+    },
+    {
+      "state": "MN",
+      "source": "https://education.mn.gov/mdeprod/groups/educ/documents/basic/cm9k/mdg3/~edisp/prod087014.xlsx",
+      "status": "downloaded",
+      "path": "/home/runner/work/DL-Research/DL-Research/output/raw/MN/MN_2025_ACCESS_public.xlsx",
+      "bytes": "209783239",
+      "url": "https://education.mn.gov/mdeprod/groups/educ/documents/basic/cm9k/mdg3/~edisp/prod087014.xlsx"
+    },
+    {
+      "state": "WI",
+      "source": "https://dpi.wi.gov/wisedash/download-files",
+      "status": "no_verified_direct_download",
+      "message": "Use publicly downloadable certified ACCESS/WIDA file; exact downloadable resource not confirmed for unattended retrieval."
+    },
+    {
+      "state": "MI",
+      "source": "https://www.mischooldata.org/wida-proficiency/",
+      "status": "no_verified_direct_download",
+      "message": "Interactive report/export. Put public school-level export in incoming/MI or supply --source MI=FILE."
+    },
+    {
+      "state": "IN",
+      "source": "https://www.in.gov/doe/",
+      "status": "no_verified_direct_download",
+      "message": "Await verified public school-level ACCESS URL."
+    },
+    {
+      "state": "MO",
+      "source": "https://dese.mo.gov/",
+      "status": "no_verified_direct_download",
+      "message": "Await verified public school-level ACCESS URL."
+    },
+    {
+      "state": "SD",
+      "source": "https://doe.sd.gov/",
+      "status": "no_verified_direct_download",
+      "message": "Await verified public school-level ACCESS URL."
+    },
+    {
+      "state": "ND",
+      "source": "https://www.nd.gov/dpi/",
+      "status": "no_verified_direct_download",
+      "message": "Await verified public school-level ACCESS URL."
+    }
+  ],
+  "parsed_files": [
+    {
+      "state": "IL",
+      "file": "/home/runner/work/DL-Research/DL-Research/output/raw/IL/IL_2025_report_card_public.xlsx",
+      "sheets": [
+        {
+          "name": "Revision History",
+          "status": "no recognizable school column"
+        },
+        {
+          "name": "General",
+          "status": "processed",
+          "school_rows_checked": 4692,
+          "potential_school_rows_matched": 10,
+          "candidate_metric_fields": 0
+        },
+        {
+          "name": "General (2)",
+          "status": "processed",
+          "school_rows_checked": 4692,
+          "potential_school_rows_matched": 10,
+          "candidate_metric_fields": 0
+        },
+        {
+          "name": "ACT",
+          "status": "processed",
+          "school_rows_checked": 4692,
+          "potential_school_rows_matched": 10,
+          "candidate_metric_fields": 0
+        },
+        {
+          "name": "DLM",
+          "status": "processed",
+          "school_rows_checked": 4692,
+          "potential_school_rows_matched": 10,
+          "candidate_metric_fields": 0
+        },
+        {
+          "name": "DLM (2)",
+          "status": "processed",
+          "school_rows_checked": 4692,
+          "potential_school_rows_matched": 10,
+          "candidate_metric_fields": 0
+        },
+        {
+          "name": "IAR",
+          "status": "processed",
+          "school_rows_checked": 4692,
+          "potential_school_rows_matched": 10,
+          "candidate_metric_fields": 0
+        },
+        {
+          "name": "ISA",
+          "status": "processed",
+          "school_rows_checked": 4692,
+          "potential_school_rows_matched": 10,
+          "candidate_metric_fields": 0
+        },
+        {
+          "name": "ELAMathScience",
+          "status": "processed",
+          "school_rows_checked": 4692,
+          "potential_school_rows_matched": 10,
+          "candidate_metric_fields": 0
+        },
+        {
+          "name": "ELAMathScience (2)",
+          "status": "processed",
+          "school_rows_checked": 4692,
+          "potential_school_rows_matched": 10,
+          "candidate_metric_fields": 0
+        },
+        {
+          "name": "CTE",
+          "status": "processed",
+          "school_rows_checked": 4692,
+          "potential_school_rows_matched": 10,
+          "candidate_metric_fields": 0
+        },
+        {
+          "name": "CTE (2)",
+          "status": "processed",
+          "school_rows_checked": 4692,
+          "potential_school_rows_matched": 10,
+          "candidate_metric_fields": 0
+        },
+        {
+          "name": "Discipline",
+          "status": "processed",
+          "school_rows_checked": 4692,
+          "potential_school_rows_matched": 10,
+          "candidate_metric_fields": 0
+        },
+        {
+          "name": "Finance",
+          "status": "processed",
+          "school_rows_checked": 4694,
+          "potential_school_rows_matched": 10,
+          "candidate_metric_fields": 0
+        },
+        {
+          "name": "KIDS",
+          "status": "processed",
+          "school_rows_checked": 4692,
+          "potential_school_rows_matched": 10,
+          "candidate_metric_fields": 0
+        },
+        {
+          "name": "SPED",
+          "status": "processed",
+          "school_rows_checked": 4692,
+          "potential_school_rows_matched": 10,
+          "candidate_metric_fields": 0
+        }
+      ],
+      "high_confidence": 75,
+      "review_rows": 75,
+      "access_fields": 0,
+      "warnings": []
+    },
+    {
+      "state": "MN",
+      "file": "/home/runner/work/DL-Research/DL-Research/output/raw/MN/MN_2025_ACCESS_public.xlsx",
+      "sheets": [
+        {
+          "name": "Assessment Information",
+          "status": "no recognizable school column"
+        },
+        {
+          "name": "State",
+          "status": "processed",
+          "school_rows_checked": 1871,
+          "potential_school_rows_matched": 0,
+          "candidate_metric_fields": 30
+        },
+        {
+          "name": "County",
+          "status": "processed",
+          "school_rows_checked": 88511,
+          "potential_school_rows_matched": 0,
+          "candidate_metric_fields": 30
+        },
+        {
+          "name": "District",
+          "status": "processed",
+          "school_rows_checked": 290306,
+          "potential_school_rows_matched": 0,
+          "candidate_metric_fields": 30
+        },
+        {
+          "name": "School",
+          "status": "processed",
+          "school_rows_checked": 645311,
+          "potential_school_rows_matched": 1340,
+          "candidate_metric_fields": 30
+        },
+        {
+          "name": "Column Definitions",
+          "status": "processed",
+          "school_rows_checked": 43,
+          "potential_school_rows_matched": 0,
+          "candidate_metric_fields": 0
+        }
+      ],
+      "high_confidence": 1340,
+      "review_rows": 0,
+      "access_fields": 120,
+      "warnings": []
+    }
+  ],
+  "total_inventory_schools": 56,
+  "matched_candidate_records": 1490,
+  "candidate_metric_values": 23658,
+  "note": "All extracted values are candidate raw fields; verify metric/denominator/year/grade before adding to analysis."
+}
