@@ -1,12 +1,18 @@
-# Midwest ACCESS collector — latest run
+# Public school-level education collection — latest run
 
-Last attempt (UTC): 2026-10-27T23:18:37.042534+00:00
+Source files successfully parsed: **2**
 
-Parsed 2 source file(s); all extracted measures remain **unvalidated candidates**.
+Inventory entries: **56**
 
-Inventory entries: **56**; source school-row matches: **1225**; candidate metric cells: **19908**.
+Non-excluded schools with candidate ACCESS fields: **0**
 
-**These counts are not validated ACCESS exit rates or an analytical sample size.**
+Non-excluded schools with candidate academic fields: **0**
+
+**Validated analytical observations: 0 (validation not automated).**
+
+All metric values retain the source names and require manual confirmation of assessment, year, subgroup, grade, denominator, and applicability to DL students.
+
+Excluded schools remain in match auditing, but are omitted from the published candidate metric CSVs.
 
 ## Source status
 
@@ -21,20 +27,11 @@ Inventory entries: **56**; source school-row matches: **1225**; candidate metric
 | SD | no_verified_direct_download | Await verified public school-level ACCESS URL. |
 | ND | no_verified_direct_download | Await verified public school-level ACCESS URL. |
 
-## Parsed source files
+## Parsed files
 
-| State | Source | Parsed sheets | Warnings |
-|---|---|---:|---|
-| IL | IL_2025_report_card_public.xlsx | 15 |  |
-| MN | MN_2025_ACCESS_public.xlsx | 5 |  |
+| State | File | Processed sheets |
+|---|---|---:|
+| IL | IL_2025_report_card_public.xlsx | 15 |
+| MN | MN_2025_ACCESS_public.xlsx | 5 |
 
-## Research safeguards
-
-- Raw state spreadsheets are not committed to the repository.
-- Candidate fields retain **exactly** their source names; no exit rates are inferred.
-- Name-based school matches must be reviewed before analysis.
-- Whole-school scores may include non-dual-language strands.
-- Historical 2024–25 ACCESS criteria vary by state; classifications follow kindergarten starting allocation.
-- For every run, download all CSVs under **Actions → Collect public ACCESS data → chosen run → Artifacts**.
-
-The [school inventory](../../midwest_school_inventory.csv) is a working screening dataset, not verified experimental evidence.
+Raw state files are not committed. School-name matches and whole-school versus DL-strand comparability must be verified before inference.

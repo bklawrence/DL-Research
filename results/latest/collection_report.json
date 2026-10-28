@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-10-27T23:18:37.042534+00:00",
+  "created_utc": "2026-10-28T00:39:02.685938+00:00",
   "purpose": "school-level aggregate ACCESS retrieval; no inferred comparability or exit rates",
   "downloads": [
     {
@@ -83,14 +83,14 @@
           "status": "processed",
           "school_rows_checked": 4692,
           "potential_school_rows_matched": 10,
-          "candidate_metric_fields": 0
+          "candidate_metric_fields": 320
         },
         {
           "name": "DLM",
           "status": "processed",
           "school_rows_checked": 4692,
           "potential_school_rows_matched": 10,
-          "candidate_metric_fields": 0
+          "candidate_metric_fields": 800
         },
         {
           "name": "DLM (2)",
@@ -104,7 +104,7 @@
           "status": "processed",
           "school_rows_checked": 4692,
           "potential_school_rows_matched": 10,
-          "candidate_metric_fields": 0
+          "candidate_metric_fields": 560
         },
         {
           "name": "ISA",
@@ -118,7 +118,7 @@
           "status": "processed",
           "school_rows_checked": 4692,
           "potential_school_rows_matched": 10,
-          "candidate_metric_fields": 0
+          "candidate_metric_fields": 880
         },
         {
           "name": "ELAMathScience (2)",
@@ -172,7 +172,7 @@
       ],
       "high_confidence": 75,
       "review_rows": 75,
-      "access_fields": 0,
+      "access_fields": 2560,
       "warnings": []
     },
     {
@@ -228,7 +228,7 @@
   "total_inventory_schools": 56,
   "matched_candidate_records": 1225,
   "distinct_inventory_entries_with_matches": 12,
-  "distinct_inventory_entries_with_metric_values": 2,
-  "candidate_metric_values": 19908,
+  "distinct_inventory_entries_with_metric_values": 12,
+  "candidate_metric_values": 25656,
   "note": "All extracted values are candidate raw fields; verify metric/denominator/year/grade before adding to analysis."
 }
