@@ -1,0 +1,36 @@
+
+name: Test Illinois ACCESS PDF
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install PDF text extractor
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y poppler-utils
+
+      - name: Test IPA report
+        run: python3 test_ipa_access.py
+
+      - name: Upload diagnostic results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ipa-access-diagnostic
+          path: output/ipa_access_test/
+          if-no-files-found: warn
