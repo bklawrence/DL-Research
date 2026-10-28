@@ -1,4 +1,4 @@
-# Midwest dual-language ACCESS research collector
+# dual-language research collector
 
 This repository runs a **public, school-aggregate ACCESS collector in GitHub Actions**. It supports the existing 56-entry Illinois, Indiana, Michigan, Minnesota, Missouri, North Dakota, South Dakota, and Wisconsin school inventory. School classifications distinguish **90–10, 80–20, and 50–50 kindergarten starting models** from normal progression toward 50–50 in later grades.
 
