@@ -1,0 +1,36 @@
+
+name: Discover Illinois historical fields
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Discover historical assessment columns
+        run: |
+          python3 discover_illinois_fields.py \
+            --years 2019,2020,2021,2022,2023
+
+      - name: Upload field discovery audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: illinois-field-discovery-${{ github.run_number }}
+          path: output/illinois_field_discovery/
+          if-no-files-found: warn
+          retention-days: 30
