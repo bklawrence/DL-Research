@@ -1,0 +1,36 @@
+
+name: Collect Illinois historical IAR levels
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Extract historical IAR performance levels
+        run: |
+          python3 collect_illinois_iar_levels.py \
+            --years 2019,2021,2022,2023
+
+      - name: Upload results and audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: illinois-iar-levels-${{ github.run_number }}
+          path: output/illinois_iar_levels/
+          if-no-files-found: error
+          retention-days: 30
