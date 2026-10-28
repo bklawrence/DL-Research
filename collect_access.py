@@ -59,6 +59,12 @@ DEFAULT_SOURCES = {
 }
 
 # Identifies headings that MIGHT represent ACCESS/EL metrics; always preserve exact source label.
+ACADEMIC_HEADING = re.compile(r"\b(?:IAR|ELA|Math|Mathematics)\b.*(?:proficiency|proficient|tested|participation|count)", re.I)
+
+def eligible_candidate(item):
+    status = str(item.get('Screening_status', '')).upper()
+    return not (status.startswith('EXCLUDE') or status.startswith('NEW/INCOMPLETE'))
+
 METRIC_HEADING = re.compile(
     r"access|wida|english.?language.?proficien|english.?learner.*(?:progress|exit|proficien)|"
     r"\bel\b.*(?:progress|exit|proficien)|reclassif|english.?proficien.*(?:progress|exit)|"
@@ -360,9 +366,10 @@ def extract_file(path: Path, state: str, inventory: list[dict[str, str]], output
                         "source_district_id":optional_header_value(vals,DISTRICT_ID_FIELD),
                         "source_students_included":optional_header_value(vals,INCLUDED_FIELD)}
             metric_cols = [(i,n) for i,n in ordered if METRIC_HEADING.search(n) or
-                           (is_access_file and ACCESS_FILE_METRIC.search(n))]
+                           (is_access_file and ACCESS_FILE_METRIC.search(n)) or
+                           (state == 'IL' and ACADEMIC_HEADING.search(n))]
             for i,n in metric_cols:
-                fields.append({"state":state,"file":path.name,"sheet":sheet,"source_field":n,"source_column_index":i+1,"classification":"candidate_NOT_validated"})
+                fields.append({"state":state,"file":path.name,"sheet":sheet,"source_field":n,"source_column_index":i+1,"classification":"candidate_NOT_validated", "metric_family":("academic" if ACADEMIC_HEADING.search(n) and not METRIC_HEADING.search(n) else "access")})
             field_count = len(metric_cols)
             processed, candidates_count = 0,0
             for vals in initial[header_index+1:]:
@@ -373,13 +380,13 @@ def extract_file(path: Path, state: str, inventory: list[dict[str, str]], output
                     item, score, status = match_school(school, vals.get(didx,'') if didx is not None else '', inventory)
                     if item and status != 'unmatched':
                         candidates_count += 1
-                        audit.append({"state":state,"source_file":path.name,"sheet":sheet,"reported_school":school,"reported_district":vals.get(didx,'') if didx is not None else '',"inventory_id":item.get('Row_ID',''),"inventory_school":item['School'],"model":item.get('Entry_Model_Revised','') or item.get('Model_2024_25',''),"match_score":score,"match_status":status})
+                        audit.append({"state":state,"source_file":path.name,"sheet":sheet,"reported_school":school,"reported_district":vals.get(didx,'') if didx is not None else '',"inventory_id":item.get('Row_ID',''),"inventory_school":item['School'],"model":item.get('Entry_Model_Revised','') or item.get('Model_2024_25',''),"match_score":score,"match_status":status,"eligibility_screen":("candidate" if eligible_candidate(item) else "excluded_from_primary")})
                         if status == 'high_confidence_name_match': manifest['high_confidence'] += 1
                         else: manifest['review_rows'] += 1
                         for idx, metric in metric_cols:
                             val = vals.get(idx,'')
                             if str(val).strip():
-                                matches.append({"state":state,"school":item['School'],"inventory_id":item.get('Row_ID',''),"reported_school":school,"reported_district":vals.get(didx,'') if didx is not None else '',"grade":vals.get(gidx,'') if gidx is not None else '',"subgroup":vals.get(groupidx,'') if groupidx is not None else '',"reported_year":vals.get(yearidx,'') if yearidx is not None else '',"field_name_AS_PUBLISHED":metric,"value_AS_PUBLISHED":val,"source_sheet":sheet,"source_file":path.name,"source_url":source_uri,"match_status":status,"match_score":score,"metric_status":"unvalidated_candidate_not_standardized", **row_context(vals)})
+                                matches.append({"state":state,"school":item['School'],"inventory_id":item.get('Row_ID',''),"reported_school":school,"reported_district":vals.get(didx,'') if didx is not None else '',"grade":vals.get(gidx,'') if gidx is not None else '',"subgroup":vals.get(groupidx,'') if groupidx is not None else '',"reported_year":vals.get(yearidx,'') if yearidx is not None else '',"field_name_AS_PUBLISHED":metric,"value_AS_PUBLISHED":val,"source_sheet":sheet,"source_file":path.name,"source_url":source_uri,"match_status":status,"match_score":score,"metric_status":"unvalidated_candidate_not_standardized", "metric_family":("academic" if ACADEMIC_HEADING.search(metric) and not METRIC_HEADING.search(metric) else "access"), "eligibility_screen":("candidate" if eligible_candidate(item) else "excluded_from_primary"), **row_context(vals)})
             for vals in rows:
                 processed += 1
                 school = vals.get(sidx, '')
@@ -387,13 +394,13 @@ def extract_file(path: Path, state: str, inventory: list[dict[str, str]], output
                 item, score, status = match_school(school, vals.get(didx,'') if didx is not None else '', inventory)
                 if not item or status == 'unmatched': continue
                 candidates_count += 1
-                audit.append({"state":state,"source_file":path.name,"sheet":sheet,"reported_school":school,"reported_district":vals.get(didx,'') if didx is not None else '',"inventory_id":item.get('Row_ID',''),"inventory_school":item['School'],"model":item.get('Entry_Model_Revised','') or item.get('Model_2024_25',''),"match_score":score,"match_status":status})
+                audit.append({"state":state,"source_file":path.name,"sheet":sheet,"reported_school":school,"reported_district":vals.get(didx,'') if didx is not None else '',"inventory_id":item.get('Row_ID',''),"inventory_school":item['School'],"model":item.get('Entry_Model_Revised','') or item.get('Model_2024_25',''),"match_score":score,"match_status":status,"eligibility_screen":("candidate" if eligible_candidate(item) else "excluded_from_primary")})
                 if status == 'high_confidence_name_match': manifest['high_confidence'] += 1
                 else: manifest['review_rows'] += 1
                 for idx, metric in metric_cols:
                     val = vals.get(idx,'')
                     if not str(val).strip(): continue
-                    matches.append({"state":state,"school":item['School'],"inventory_id":item.get('Row_ID',''),"reported_school":school,"reported_district":vals.get(didx,'') if didx is not None else '',"grade":vals.get(gidx,'') if gidx is not None else '',"subgroup":vals.get(groupidx,'') if groupidx is not None else '',"reported_year":vals.get(yearidx,'') if yearidx is not None else '',"field_name_AS_PUBLISHED":metric,"value_AS_PUBLISHED":val,"source_sheet":sheet,"source_file":path.name,"source_url":source_uri,"match_status":status,"match_score":score,"metric_status":"unvalidated_candidate_not_standardized", **row_context(vals)})
+                    matches.append({"state":state,"school":item['School'],"inventory_id":item.get('Row_ID',''),"reported_school":school,"reported_district":vals.get(didx,'') if didx is not None else '',"grade":vals.get(gidx,'') if gidx is not None else '',"subgroup":vals.get(groupidx,'') if groupidx is not None else '',"reported_year":vals.get(yearidx,'') if yearidx is not None else '',"field_name_AS_PUBLISHED":metric,"value_AS_PUBLISHED":val,"source_sheet":sheet,"source_file":path.name,"source_url":source_uri,"match_status":status,"match_score":score,"metric_status":"unvalidated_candidate_not_standardized", "metric_family":("academic" if ACADEMIC_HEADING.search(metric) and not METRIC_HEADING.search(metric) else "access"), "eligibility_screen":("candidate" if eligible_candidate(item) else "excluded_from_primary"), **row_context(vals)})
             manifest['access_fields'] += field_count
             manifest['sheets'].append({"name":sheet,"status":"processed","school_rows_checked":processed,"potential_school_rows_matched":candidates_count,"candidate_metric_fields":field_count})
     except (ValueError, OSError, ET.ParseError, zipfile.BadZipFile, EOFError, KeyError) as e:
@@ -468,25 +475,36 @@ def main():
             provenance = direct if f.parent.resolve() == (raw/state).resolve() and f.name == auto_name else ''
             ms, fs, au, ha, run=extract_file(f, state, by_state.get(state,[]), out, provenance)
             all_matches+=ms; all_fields+=fs; all_audit+=au; all_headers+=ha; runs.append(run)
-    write_csv(out/'access_metric_candidates.csv', all_matches, [
+    write_csv(out/'access_metric_candidates.csv', [r for r in all_matches if r['metric_family']=='access' and r['eligibility_screen']=='candidate'], [
         'state','school','inventory_id','reported_school','reported_district','grade','subgroup','reported_year','field_name_AS_PUBLISHED',
         'value_AS_PUBLISHED','source_sheet','source_file','source_url','match_status','match_score','metric_status',
-        'source_test','source_subject_or_domain','source_school_id','source_district_id','source_students_included'])
+        'source_test','source_subject_or_domain','source_school_id','source_district_id','source_students_included', 'metric_family','eligibility_screen'])
+    write_csv(out/'academic_metric_candidates.csv', [r for r in all_matches if r['metric_family']=='academic' and r['eligibility_screen']=='candidate'], [
+        'state','school','inventory_id','reported_school','reported_district','grade','subgroup','reported_year','field_name_AS_PUBLISHED',
+        'value_AS_PUBLISHED','source_sheet','source_file','source_url','match_status','match_score','metric_status',
+        'source_test','source_subject_or_domain','source_school_id','source_district_id','source_students_included','metric_family','eligibility_screen'])
     write_csv(out/'match_audit.csv', all_audit, [
-        'state','source_file','sheet','reported_school','reported_district','inventory_id','inventory_school','model','match_score','match_status'])
+        'state','source_file','sheet','reported_school','reported_district','inventory_id','inventory_school','model','match_score','match_status','eligibility_screen'])
     write_csv(out/'field_inventory.csv', all_fields, [
-        'state','file','sheet','source_field','source_column_index','classification'])
+        'state','file','sheet','source_field','source_column_index','classification','metric_family'])
     write_csv(out/'source_column_inventory.csv', all_headers, [
         'state','file','sheet','column_index','header_AS_PUBLISHED','looks_ACCESS_related'])
     school_count = {}
+    access_count = {}
+    academic_count = {}
     for r in all_matches:
         key = (r['state'], r['inventory_id'], r['school'])
         school_count[key] = school_count.get(key, 0) + 1
+        counter = access_count if r['metric_family']=='access' else academic_count
+        counter[key] = counter.get(key, 0) + 1
     school_coverage = []
     for state in states:
         for item in by_state.get(state, []):
             row = dict(item)
-            row['ACCESS_raw_metric_cells_found'] = school_count.get((state, item.get('Row_ID',''), item['School']), 0)
+            row['collection_eligibility_screen'] = 'candidate' if eligible_candidate(item) else 'excluded_from_primary'
+            row['academic_raw_metric_cells_found'] = academic_count.get((state, item.get('Row_ID',''), item['School']), 0)
+            row['ACCESS_raw_metric_cells_found'] = access_count.get((state, item.get('Row_ID',''), item['School']), 0)
+            row['all_raw_metric_cells_found'] = school_count.get((state, item.get('Row_ID',''), item['School']), 0)
             row['ACCESS_extraction_status'] = ('raw_candidates_available_require_review' if row['ACCESS_raw_metric_cells_found'] else 'not_retrieved_or_not_matched')
             school_coverage.append(row)
     if school_coverage:
